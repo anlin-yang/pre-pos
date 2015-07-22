@@ -1,34 +1,34 @@
-function count_same_elements(collection) {
-  var result = [];
-  var arr_count = {};
-  for (var i = 0; i < collection.length; i++) {
-    var tempObject = getTempObject(collection[i]);
-    arr_count[tempObject.key] = (arr_count[tempObject.key] + tempObject.count) || tempObject.count;
+function objectify(str) {
+  var SYMBOL_START_POS = 2;
+  var count = 1;
+  if (str.indexOf("-") > -1 ||
+    str.indexOf(":") > -1 ||
+    str.indexOf("[") > -1) {
+    count = parseInt(str.slice(SYMBOL_START_POS));
   }
-  for (var item in arr_count) {
-    result.push({
-      name: item,
-      summary: arr_count[item]
-    });
-  }
-  return result;
+  return {
+    name: str.charAt(0),
+    summary: count
+  };
 }
 
-function getTempObject(item) {
-  if (item.length == 1) {
-    return {
-      key: item,
-      count: 1
-    };
-  } else if (item.charAt(item.length - 1) == ']') {
-    return {
-      key: item.charAt(0),
-      count: (item.substring(item.indexOf('[') + 1, item.length - 1) - 0)
-    };
-  } else {
-    return {
-      key: item.charAt(0),
-      count: (item.charAt(2) - 0)
-    };
-  }
+function count_same_elements(collection) {
+  var result = [];
+  var temp = collection.map(function(val) {
+    return objectify(val);
+  });
+
+  temp.forEach(function(val) {
+    var exist_items = result.filter(function(item) {
+      return item.name === val.name;
+    });
+
+    if (exist_items.length === 0) {
+      result.push(val);
+    } else {
+      exist_items[0].summary += val.summary;
+    }
+  });
+
+  return result;
 }

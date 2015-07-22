@@ -1,25 +1,30 @@
-function count_same_elements(collection) {
-  var result = [];
-  var count = 0;
-  for (var i = 0; i < collection.length; i++) {
-    if (collection[i] == collection[i + 1]) {
-      count++;
-    } else {
-      if (collection[i].length == 1) {
-        count++;
-        result.push({
-          key: collection[i],
-          count: count
-        });
-      } else {
-        count = collection[i].substring(2, 3) - 0; // 注意，此处是将字符转换成数字
-        result.push({
-          key: collection[i].substring(0, 1),
-          count: count
-        });
-      }
-      count = 0;
-    }
+function objectify(str) {
+  var SYMBOL_START_POS = 2;
+  var count = 1;
+  if (str.indexOf("-") > -1 ||
+    str.indexOf(":") > -1 ||
+    str.indexOf("[") > -1) {
+    count = parseInt(str.slice(SYMBOL_START_POS));
   }
-  return result;
+  return {
+    name: str.charAt(0),
+    summary: count
+  }
+}
+
+function count_same_elements(collection) {
+  var result = {};
+  var result2 = [];
+  var temp = collection.map(function(val) {
+    return objectify(val);
+  }).forEach(function(item) {
+    result[item["name"]] = (result[item["name"]] + item["summary"]) || item["summary"];
+  });
+  for (var i in result) {
+    result2.push({
+      key: i,
+      count: result[i]
+    });
+  }
+  return result2;
 }
