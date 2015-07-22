@@ -8,17 +8,6 @@ function count_same_elements(collection) {
   return result;
 }
 
-function groupingItem(obj, result) {
-  var exist_items = result.filter(function(item) {
-    return item.name === obj.name;
-  });
-  if (exist_items.length === 0) {
-    result.push(obj);
-  } else {
-    exist_items[0].summary += obj.summary;
-  }
-}
-
 function objectify(str) {
   var SYMBOL_START_POS = 2;
   var count = 1;
@@ -31,4 +20,15 @@ function objectify(str) {
     name: str.charAt(0),
     summary: count
   };
+}
+
+function groupingItem(obj, result) {
+  var exist_items = result.filter(function(item) {
+    return item.name === obj.name;
+  });
+  if (exist_items.length === 0) {
+    result.push(obj);
+  } else {
+    exist_items[0].summary += obj.summary;
+  }
 }
