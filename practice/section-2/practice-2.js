@@ -13,18 +13,15 @@ function objectify(str) {
 }
 
 function count_same_elements(collection) {
-  var result = {};
-  var result2 = [];
+  var obj = {};
+  var result = [];
   var temp = collection.map(function(val) {
     return objectify(val);
   }).forEach(function(item) {
-    result[item["name"]] = (result[item["name"]] + item["summary"]) || item["summary"];
+    obj[item["name"]] = (obj[item["name"]] + item["summary"]) || item["summary"];
   });
-  for (var i in result) {
-    result2.push({
-      key: i,
-      count: result[i]
-    });
+  for (var i in obj) {
+    result.push( {key: i, count: obj[i]} );
   }
-  return result2;
+  return result;
 }
