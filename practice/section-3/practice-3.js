@@ -1,27 +1,21 @@
 function create_updated_collection(collection_a, object_b) {
   var collection_c = create_collection_c(collection_a);
-  for (var i = 0; i < collection_c.length; i++) {
-    if (object_b["value"].indexOf(collection_c[i].key) != -1) {
-      collection_c[i]["count"] -= parseInt(collection_c[i]["count"] / 3);
+  collection_c.forEach(function(val) {
+    if (object_b["value"].indexOf(val.key) != -1) {
+      val["count"] -= parseInt(val["count"] / 3);
     }
-  }
+  });
   return collection_c;
 }
 
 function create_collection_c(collection_a) {
-  var result_c = [];
-  var count_num = 0;
-  for (var i = 0; i < collection_a.length; i++) {
-    if (collection_a[i] == collection_a[i + 1]) {
-      count_num++;
-    } else {
-      count_num++;
-      result_c.push({
-        key: collection_a[i],
-        count: count_num
-      });
-      count_num = 0;
-    }
+  var result = [];
+  var tempObj = {};
+  collection_a.forEach(function(val){
+    tempObj[val] = tempObj[val] + 1 || 1;
+  });
+  for(var item in tempObj){
+    result.push({key: item, count: tempObj[item]});
   }
-  return result_c;
+   return result;
 }
