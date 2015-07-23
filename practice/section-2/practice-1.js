@@ -9,5 +9,6 @@ function count_same_elements(collection) {
   for(var item in arr_counts) {
 	  result.push({ key: item, count: arr_counts[item]});
   }
+  
   return result;
 }

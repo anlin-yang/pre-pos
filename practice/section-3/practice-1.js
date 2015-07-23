@@ -4,5 +4,6 @@ function create_updated_collection(collection_a, object_b) {
       val["count"]--;
     }
   });
+  
   return collection_a;
 }

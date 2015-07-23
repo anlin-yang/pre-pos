@@ -5,17 +5,20 @@ function count_same_elements(collection) {
   }).forEach(function(val) {
     groupingItem(val, result);
   });
+
   return result;
 }
 
 function objectify(str) {
   var SYMBOL_START_POS = 2;
   var count = 1;
+
   if (str.indexOf("-") > -1 ||
     str.indexOf(":") > -1 ||
     str.indexOf("[") > -1) {
     count = parseInt(str.slice(SYMBOL_START_POS));
   }
+  
   return {
     name: str.charAt(0),
     summary: count
